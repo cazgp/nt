@@ -1,0 +1,14 @@
+[package]
+name = "nt"
+version = "0.1.0"
+authors = ["Caroline Glassberg-Powell <caroline@glassberg-powell.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "*"
+colored = "*"
+edit = "*"
+skim = "*"
+structopt = "0.3"
