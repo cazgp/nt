@@ -9,7 +9,7 @@ use structopt::StructOpt;
 enum Nt {
     /// Start writing a new note
     #[structopt(alias = "n")]
-    New,
+    New { filename: Option<String> },
     /// Search existing notes and open in file for editing
     #[structopt(alias = "s")]
     Search { needle: String },
@@ -51,8 +51,12 @@ fn main() {
     std::fs::create_dir_all(&dir).unwrap();
 
     match Nt::from_args() {
-        Nt::New => {
-            let filename = format!("{}.md", chrono::Local::now().format("%Y%m%d%H%M%S"));
+        Nt::New { filename } => {
+            let now = chrono::Local::now().format("%Y%m%d%H%M%S");
+            let filename = match filename {
+                Some(x) => format!("{}-{}.md", now, x),
+                None => format!("{}.md", now),
+            };
             let fullname = dir.join(&filename);
             edit::edit_file(&fullname).unwrap();
             print_preview(Action::Created, &fullname);
